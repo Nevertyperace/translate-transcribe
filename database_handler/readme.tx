@@ -1,0 +1,5 @@
+The database implemented is asynchronus redis (aioredis), 
+I coded some asic functionality, but right now, it saves data 
+into the database purely depending on user id and data are divided into
+translations and transcriptions. The function delete also deletes the whole
+set for the user, instead of a particular entry. 

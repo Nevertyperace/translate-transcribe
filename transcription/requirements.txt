@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+python-multipart
+ffmpeg
+transformers
+openai-whisper
+pandas

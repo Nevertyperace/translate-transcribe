@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+lxml
+pandas
+pycountry
+wget
+fasttext-wheel
+transformers
+nltk
+html5lib

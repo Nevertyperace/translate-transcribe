@@ -1,0 +1,74 @@
+version: "3.9"
+services:
+  ui:
+    build:
+      dockerfile: Dockerfile
+      context: ./frontend
+    ports:
+      - '3000:3000'
+    networks:
+      - awct_network
+
+  whisper:
+    build:
+      dockerfile: Dockerfile
+      context: ./transcription
+    ports:
+      - '8001:8001'
+    networks:
+      - awct_network
+
+  nllb:
+    build:
+      dockerfile: Dockerfile
+      context: ./translation
+    ports:
+      - '8000:8000'
+    networks:
+      - awct_network
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    networks:
+      - awct_network
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: awct_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - '5432:5432'
+    networks:
+      - awct_network
+
+  data:
+    build:
+      dockerfile: Dockerfile
+      context: database_handler
+    ports:
+      - '8002:8002'
+    networks:
+      - awct_network
+
+  user_data:
+    build:
+      dockerfile: Dockerfile
+      context: login
+    depends_on:
+      - postgres
+    networks:
+      - awct_network
+    ports:
+      - '8003:8003' 
+
+networks:
+  awct_network:
+    name: awct_network
+    driver: bridge
+
+volumes:
+  postgres_data:
